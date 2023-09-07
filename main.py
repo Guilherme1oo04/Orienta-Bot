@@ -69,7 +69,7 @@ def callback_duvidas(callback):
 
 #Teclado sice
 keyboardSice = keyboards.tecladoSice()
-
+#Comandos - Sice
 @estagioBot.message_handler(commands=["sice"])
 def command_sice(message):
 
@@ -80,6 +80,42 @@ def command_sice(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "sice")
 def callback_sice(callback):
     command_sice(callback.message)
-        
+
+
+@estagioBot.message_handler(commands=["autoAvaliacao"])
+def command_autoAvaliacao(message):
+
+    texto = "explicação da auto avaliação"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "autoAvaliacao")
+def callback_autoAvaliacao(callback):
+    command_autoAvaliacao(callback.message)
+
+
+@estagioBot.message_handler(commands=["avaliacaoOrientador"])
+def command_avaliacaoOrientador(message):
+
+    texto = "explicação da avaliação do orientador"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "avaliacaoOrientador")
+def callback_avaliacaoOrientador(callback):
+    command_avaliacaoOrientador(callback.message)     
+
+
+@estagioBot.message_handler(commands=["envioRelatorio"])
+def command_envioRelatorio(message):
+
+    texto = "explicação do envio do relatório"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "envioRelatorio")
+def callback_envioRelatorio(callback):
+    command_envioRelatorio(callback.message)   
+
 
 estagioBot.polling()
