@@ -2,4 +2,4 @@
 .env
 .idea
 .vscode
-/keyboards/__pycahe__
+__pycache__
