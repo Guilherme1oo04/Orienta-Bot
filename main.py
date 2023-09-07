@@ -2,6 +2,7 @@ import os
 import telebot
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from dotenv import load_dotenv
+from keyboards import keyboards
 
 load_dotenv()
 
@@ -10,15 +11,10 @@ chave_api = os.environ["API_TOKEN"]
 estagioBot = telebot.TeleBot(token=chave_api)
 
 #Teclado Start
-keyboardStart = InlineKeyboardMarkup()
-button_start = InlineKeyboardButton("Start", callback_data="start")
-keyboardStart.add(button_start)
+keyboardStart = keyboards.tecladoStart()
 
 #Teclado Sim / Não
-keyboardSN = InlineKeyboardMarkup()
-buttonSim = InlineKeyboardButton("Sim", callback_data="Sim")
-buttonNao = InlineKeyboardButton("Não", callback_data="Nao")
-keyboardSN.add(buttonSim, buttonNao)
+keyboardSN = keyboards.tecladoSimNao()
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "Sim" or call.data == "Nao")
 def responseSN(callback):
@@ -39,10 +35,7 @@ def callback_start(callback):
     handle_start(callback.message)
 
 #Teclado inicial
-keyboardInicio = InlineKeyboardMarkup()
-button_sobre = InlineKeyboardButton('Sobre', callback_data="sobre")
-button_duvidas = InlineKeyboardButton('Duvidas', callback_data="duvidas")
-keyboardInicio.add(button_sobre, button_duvidas)
+keyboardInicio = keyboards.tecladoInicio()
 
 @estagioBot.message_handler(commands=['start'])
 def handle_start(message):
@@ -60,14 +53,8 @@ def callback_sobre(callback):
     command_sobre(callback.message)
 
 
-keyboardDuvidas = InlineKeyboardMarkup()
-empresa = InlineKeyboardButton("Empresa", callback_data="empresa")
-checkEstagiario = InlineKeyboardButton("Checklist Estagiário", callback_data="checklistEstagio")
-sice = InlineKeyboardButton("Sice", callback_data="sice")
-dicasRelatorio = InlineKeyboardButton("Dicas Relatorio", callback_data="dicasRelatorio")
-mediacao = InlineKeyboardButton("Mediação", callback_data= "mediacao")
-bolsaEstagio = InlineKeyboardButton("Bolsa Estagio", callback_data="bolsaEstagio")
-keyboardDuvidas.row(empresa, checkEstagiario).row(sice, dicasRelatorio).row(mediacao, bolsaEstagio)
+#Teclado Dúvidas
+keyboardDuvidas = keyboards.tecladoDuvidas()
 
 @estagioBot.message_handler(commands=["duvidas"])
 def command_duvidas(message):
@@ -78,6 +65,21 @@ def command_duvidas(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "duvidas")
 def callback_duvidas(callback):
     command_duvidas(callback.message)
+
+
+#Teclado sice
+keyboardSice = keyboards.tecladoSice()
+
+@estagioBot.message_handler(commands=["sice"])
+def command_sice(message):
+
+    texto = "O Sice é uma plataforma usada pelo estado do Ceará para enviar coisas relacionadas ao estágio \nEssas são as principais dúvidas relacionadas ao Sice"
+
+    estagioBot.reply_to(message, texto, reply_markup=keyboardSice)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "sice")
+def callback_sice(callback):
+    command_sice(callback.message)
         
 
 estagioBot.polling()
