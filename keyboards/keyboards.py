@@ -48,3 +48,22 @@ def tecladoSice():
     keyboardSice.row(autoAvaliacao).row(avaliacaoOrientador).row(envioRelatorio)
 
     return keyboardSice
+
+def tecladoChecklist():
+
+    keyboardCheckList = InlineKeyboardMarkup()
+    frequencia = InlineKeyboardButton("Frequência", callback_data="frequencia")
+    projetoSocial = InlineKeyboardButton("Projeto Social", callback_data="SocialProject")
+    cronograma = InlineKeyboardButton("Cronograma", callback_data="cronograma")
+    avaliacao = InlineKeyboardButton("Avaliação", callback_data="avaliacao")
+    keyboardCheckList.row(frequencia, projetoSocial).row( cronograma, avaliacao)
+
+    return keyboardCheckList
+
+def tecladoFeedback():
+
+    keyboardFeedback = InlineKeyboardMarkup()
+    feedback = InlineKeyboardButton("Feedback", callback_data="feedback")
+    keyboardFeedback.add(feedback)
+
+    return keyboardFeedback

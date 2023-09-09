@@ -1,7 +1,7 @@
 import os
 import telebot
 import json
-from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
+from keyboards import keyboards
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,20 +11,13 @@ chave_api = os.environ["API_TOKEN"]
 estagioBot = telebot.TeleBot(token=chave_api)
 
 #Teclado Start
-keyboardStart = InlineKeyboardMarkup()
-button_start = InlineKeyboardButton("Start", callback_data="start")
-keyboardStart.add(button_start)
+keyboardStart = keyboards.tecladoStart()
 
 #Teclado Sim / Não
-keyboardSN = InlineKeyboardMarkup()
-buttonSim = InlineKeyboardButton("Sim", callback_data="Sim")
-buttonNao = InlineKeyboardButton("Não", callback_data="Nao")
-keyboardSN.add(buttonSim, buttonNao)
+keyboardSN = keyboards.tecladoSimNao()
 
 #feedback
-keyboardFeedback = InlineKeyboardMarkup()
-feedback = InlineKeyboardButton("Feedback", callback_data="feedback")
-keyboardFeedback.add(feedback)
+keyboardFeedback = keyboards.tecladoFeedback()
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "Sim" or call.data == "Nao")
 def responseSN(callback):
@@ -32,42 +25,37 @@ def responseSN(callback):
         command_duvidas(callback.message)
 
     elif (callback.data == "Nao"):
-        estagioBot.reply_to(callback.message, "Obrigado por utilizar, Nos ajude dando um feedback",reply_markup=keyboardFeedback )
+        estagioBot.reply_to(callback.message, "Obrigado por utilizar, Nos ajude dando um feedback", reply_markup=keyboardFeedback )
+
 
 @estagioBot.message_handler(commands=['feedback'])
 def command_feedback(message):
-    estagioBot.reply_to(message, "insert feedback msg")
-    
+    estagioBot.reply_to(message, "Escreva seu feedback no teclado")
+    estagioBot.register_next_step_handler(message, aguardar_feedback)
 
+def aguardar_feedback(message):
+    if message.text:
+        feedbackText = message.text
+        estagioBot.reply_to(message, "Feedback recebido: " + feedbackText)
+
+        if not os.path.exists('user_message.json'):
+            with open('user_message.json', 'w') as file:
+                json.dump([], file)
+
+        with open('user_message.json', 'r') as file:
+            message_data = json.load(file)
+
+        if not isinstance(message_data, list):
+            message_data = []
+
+        message_data.append({"user_message": feedbackText})
+
+        with open('user_message.json','w') as file:
+            json.dump(message_data, file)
     
 @estagioBot.callback_query_handler(func= lambda call: call.data == "feedback")
 def callback_feedback(callback):
     command_feedback(callback.message)
-   
-
-@estagioBot.message_handler(func=lambda message: True)
-def handle_feedback(message):
-    if message.text:
-        feedbackText = message.text
-        print("a")
-        estagioBot.send_message(message.chat.id, "Feedback recebido: " + feedbackText)
-        if not os.path.exists('user_message.json'):
-            with open('user_message.json', 'w') as file:
-                json.dump([], file)
-        with open('user_message.json', 'r') as file:
-            message_data = json.load(file)
-
-            
-        if not isinstance(message_data, list):
-            message_data = []
-
-
-        message_data.append({"user_message": feedbackText})
-
-        
-
-        with open('user_message.json','w') as file:
-            json.dump(message_data, file)
             
 
 #Resposta padrão do bot caso não seja um comando
@@ -82,10 +70,7 @@ def callback_start(callback):
 
 #Teclado inicial
 
-keyboardInicio = InlineKeyboardMarkup()
-button_sobre = InlineKeyboardButton('Sobre', callback_data="sobre")
-button_duvidas = InlineKeyboardButton('Duvidas', callback_data="duvidas")
-keyboardInicio.add(button_sobre, button_duvidas)
+keyboardInicio = keyboards.tecladoInicio()
 
 @estagioBot.message_handler(commands=['start'])
 def handle_start(message):
@@ -103,14 +88,7 @@ def callback_sobre(callback):
     command_sobre(callback.message)
 
 
-keyboardDuvidas = InlineKeyboardMarkup()
-empresa = InlineKeyboardButton("Empresa", callback_data="empresa")
-checkEstagiario = InlineKeyboardButton("Checklist Estagiário", callback_data="checklistEstagio")
-sice = InlineKeyboardButton("Sice", callback_data="sice")
-dicasRelatorio = InlineKeyboardButton("Dicas Relatorio", callback_data="dicasRelatorio")
-mediacao = InlineKeyboardButton("Mediação", callback_data= "mediacao")
-bolsaEstagio = InlineKeyboardButton("Bolsa Estagio", callback_data="bolsaEstagio")
-keyboardDuvidas.row(empresa, checkEstagiario).row(sice, dicasRelatorio).row(mediacao, bolsaEstagio)
+keyboardDuvidas = keyboards.tecladoDuvidas()
 
 @estagioBot.message_handler(commands=["duvidas"])
 def command_duvidas(message):
@@ -134,12 +112,7 @@ def callback_mediacao(callback):
     command_mediacao(callback.message)
     
 #teclado checklist
-keyboardCheckList = InlineKeyboardMarkup()
-frequencia = InlineKeyboardButton("Frequência", callback_data="frequencia")
-projetoSocial = InlineKeyboardButton("Projeto Social", callback_data="SocialProject")
-cronograma = InlineKeyboardButton("Cronograma", callback_data="cronograma")
-avaliacao = InlineKeyboardButton("Avaliação", callback_data="avaliacao")
-keyboardCheckList.row(frequencia, projetoSocial).row( cronograma, avaliacao)
+keyboardCheckList = keyboards.tecladoChecklist()
 
 @estagioBot.message_handler(commands=["checklistEstagio"])
 def command_checklistEstagio(message):
@@ -189,6 +162,57 @@ def command_avaliacao(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "avaliacao")
 def callback_avaliacao(callback):
     command_avaliacao(callback.message)
+
+
+#Teclado sice
+keyboardSice = keyboards.tecladoSice()
+#Comandos - Sice
+@estagioBot.message_handler(commands=["sice"])
+def command_sice(message):
+
+    texto = "O Sice é uma plataforma usada pelo estado do Ceará para enviar coisas relacionadas ao estágio \nEssas são as principais dúvidas relacionadas ao Sice"
+
+    estagioBot.reply_to(message, texto, reply_markup=keyboardSice)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "sice")
+def callback_sice(callback):
+    command_sice(callback.message)
+
+
+@estagioBot.message_handler(commands=["autoAvaliacao"])
+def command_autoAvaliacao(message):
+
+    texto = "explicação da auto avaliação"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "autoAvaliacao")
+def callback_autoAvaliacao(callback):
+    command_autoAvaliacao(callback.message)
+
+
+@estagioBot.message_handler(commands=["avaliacaoOrientador"])
+def command_avaliacaoOrientador(message):
+
+    texto = "explicação da avaliação do orientador"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "avaliacaoOrientador")
+def callback_avaliacaoOrientador(callback):
+    command_avaliacaoOrientador(callback.message)     
+
+
+@estagioBot.message_handler(commands=["envioRelatorio"])
+def command_envioRelatorio(message):
+
+    texto = "explicação do envio do relatório"
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "envioRelatorio")
+def callback_envioRelatorio(callback):
+    command_envioRelatorio(callback.message)
 
 
 estagioBot.polling()
