@@ -69,7 +69,6 @@ def callback_start(callback):
 
 
 #Teclado inicial
-
 keyboardInicio = keyboards.tecladoInicio()
 
 @estagioBot.message_handler(commands=['start'])
@@ -213,6 +212,81 @@ def command_envioRelatorio(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "envioRelatorio")
 def callback_envioRelatorio(callback):
     command_envioRelatorio(callback.message)
+
+
+# Teclado - dicas de relatório
+keyboardRelatorio = keyboards.tecladoDicasRelatorio()
+# Dicas de relatório
+@estagioBot.message_handler(commands=["dicasRelatorio"])
+def command_dicasRelatorio(message):
+    estagioBot.reply_to(message, "Essas são as dicas que posso te passar", reply_markup=keyboardRelatorio)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "dicasRelatorio")
+def callback_dicasRelatorio(callback):
+    command_dicasRelatorio(callback.message)
+
+
+@estagioBot.message_handler(commands=["relatorioAbnt"])
+def command_relatorioAbnt(message):
+    texto = """
+Margens e espaçamento:
+As margens devem ser de 2,5 cm em todos os lados da página.
+O texto deve ser digitado em espaço 1,5 entre as linhas.
+
+Fonte e tamanho:
+Utilize fonte Times New Roman ou Arial, tamanho 12 para o texto do relatório.
+Para títulos e subtítulos, utilize fonte tamanho 14 ou 16, em negrito.
+
+Numeração de páginas:
+A numeração deve ser colocada no canto superior direito da página, a partir da introdução.
+A capa e a folha de rosto não devem ser numeradas.
+
+Citações e referências:
+Utilize o sistema autor-data para citações no texto, seguindo as regras da ABNT.
+Inclua uma lista de referências bibliográficas ao final do relatório, em ordem alfabética.
+
+Notas de rodapé:
+Utilize notas de rodapé para fornecer informações adicionais ou explicar termos técnicos.
+As notas de rodapé devem ser numeradas sequencialmente e colocadas na parte inferior da página.
+
+Ilustrações e tabelas:
+As ilustrações (como gráficos, imagens e diagramas) devem ser numeradas e acompanhadas de uma legenda explicativa.
+As tabelas também devem ser numeradas e ter uma legenda descritiva.
+"""
+    estagioBot.reply_to(message, texto, reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioAbnt")
+def callback_relatorioAbnt(callback):
+    command_relatorioAbnt(callback.message)
+
+
+@estagioBot.message_handler(commands=["relatorioEstrutura"])
+def command_relatorioEstrutura(message):
+    texto = """
+Capa e Folha de Rosto:
+A capa deve conter o nome da instituição, título do relatório, nome do autor, local e data.
+A folha de rosto deve conter as mesmas informações da capa, além do nome do orientador e do curso.
+
+Sumário:
+O sumário é essencial para organizar o conteúdo do relatório. Ele deve listar os títulos e subtítulos das seções, com a indicação das páginas correspondentes.
+
+Introdução:
+Na introdução, apresente o contexto do estágio, o objetivo do relatório e a importância do trabalho realizado.
+
+Desenvolvimento:
+Divida o relatório em seções e subseções, de acordo com a estruturação do seu estágio.
+Explique as atividades desenvolvidas, os métodos utilizados e os resultados obtidos.
+Utilize referências bibliográficas para fundamentar suas informações e citações.
+
+Conclusão:
+Na conclusão, faça um resumo dos principais resultados alcançados no estágio.
+Avalie o cumprimento dos objetivos propostos e discuta os aprendizados adquiridos durante o período.
+"""
+    estagioBot.reply_to(message, texto, reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioEstrutura")
+def callback_relatorioEstrutura(callback):
+    command_relatorioEstrutura(callback.message)
 
 
 estagioBot.polling()

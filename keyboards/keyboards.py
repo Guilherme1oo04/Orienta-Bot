@@ -67,3 +67,12 @@ def tecladoFeedback():
     keyboardFeedback.add(feedback)
 
     return keyboardFeedback
+
+def tecladoDicasRelatorio():
+
+    keyboardDicas = InlineKeyboardMarkup()
+    normasAbnt = InlineKeyboardButton("Normas Abnt", callback_data="relatorioAbnt")
+    estrutura = InlineKeyboardButton("Estrutura do Relatório", callback_data="relatorioEstrutura")
+    keyboardDicas.row(estrutura).row(normasAbnt)
+
+    return keyboardDicas
