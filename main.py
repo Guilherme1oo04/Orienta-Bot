@@ -102,9 +102,10 @@ def callback_duvidas(callback):
 
 @estagioBot.message_handler(commands=["mediacao"])
 def command_mediacao(message):
-    
     texto = "INSERT MEDIAÇÃO TEXT"
-    estagioBot.reply_to(message, texto, reply_markup=keyboardSN)
+
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "mediacao")
 def callback_mediacao(callback):
@@ -115,8 +116,10 @@ keyboardCheckList = keyboards.tecladoChecklist()
 
 @estagioBot.message_handler(commands=["checklistEstagio"])
 def command_checklistEstagio(message):
+    texto = "texto do checklist do estagio"
     
-    estagioBot.reply_to(message, "INSERT C. E. TEXT", reply_markup=keyboardCheckList)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "checklistEstagio")
 def callback_checklistEstagio(callback):
@@ -125,28 +128,34 @@ def callback_checklistEstagio(callback):
 
 @estagioBot.message_handler(commands=["frequencia"])
 def command_frequencia(message):
+    texto = "texto da frequencia"
     
-    estagioBot.reply_to(message, "INSERT frequencia TEXT", reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "frequencia")
 def callback_frequencia(callback):
     command_frequencia(callback.message)
 
 
-@estagioBot.message_handler(commands=["SocialProject"])
-def command_SocialProject(message):
+@estagioBot.message_handler(commands=["projetoSocial"])
+def command_projetoSocial(message):
+    texto = "texto do projeto social"
     
-    estagioBot.reply_to(message, "INSERT SocialProject TEXT", reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
-@estagioBot.callback_query_handler(func= lambda call: call.data == "SocialProject")
-def callback_SocialProjecta(callback):
-    command_SocialProject(callback.message)
+@estagioBot.callback_query_handler(func= lambda call: call.data == "projetoSocial")
+def callback_projetoSocial(callback):
+    command_projetoSocial(callback.message)
 
 
 @estagioBot.message_handler(commands=["cronograma"])
 def command_cronograma(message):
+    texto = "texto de cronograma"
     
-    estagioBot.reply_to(message, "INSERT cronograma TEXT", reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "cronograma")
 def callback_cronograma(callback):
@@ -155,8 +164,10 @@ def callback_cronograma(callback):
 
 @estagioBot.message_handler(commands=["avaliacao"])
 def command_avaliacao(message):
+    texto = "Texto de avaliacao"
     
-    estagioBot.reply_to(message, "INSERT avaliacao TEXT", reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "avaliacao")
 def callback_avaliacao(callback):
@@ -253,7 +264,8 @@ Ilustrações e tabelas:
 As ilustrações (como gráficos, imagens e diagramas) devem ser numeradas e acompanhadas de uma legenda explicativa.
 As tabelas também devem ser numeradas e ter uma legenda descritiva.
 """
-    estagioBot.reply_to(message, texto, reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioAbnt")
 def callback_relatorioAbnt(callback):
@@ -282,11 +294,85 @@ Conclusão:
 Na conclusão, faça um resumo dos principais resultados alcançados no estágio.
 Avalie o cumprimento dos objetivos propostos e discuta os aprendizados adquiridos durante o período.
 """
-    estagioBot.reply_to(message, texto, reply_markup=keyboardSN)
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioEstrutura")
 def callback_relatorioEstrutura(callback):
     command_relatorioEstrutura(callback.message)
+
+
+# Teclado Empresa
+keyboardEmpresa = keyboards.tecladoEmpresa()
+# Comando Empresa
+@estagioBot.message_handler(commands=["empresa"])
+def command_empresa(message):
+    texto = "Essas são algumas dúvidas relacionadas à empresas conectadas ao estágio"
+
+    estagioBot.reply_to(message, texto, reply_markup=keyboardEmpresa)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "empresa")
+def callback_empresa(callback):
+    command_empresa(callback.message)
+
+@estagioBot.message_handler(commands=["cargaHoraria"])
+def command_cargaHoraria(message):
+    texto = "texto carga horaria"
+
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "cargaHoraria")
+def callback_cargaHoraria(callback):
+    command_cargaHoraria(callback.message)
+
+@estagioBot.message_handler(commands=["processoSeletivo"])
+def command_processoSeletivo(message):
+    texto = "texto processo seletivo"
+
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "processoSeletivo")
+def callback_processoSeletivo(callback):
+    command_processoSeletivo(callback.message)
+
+@estagioBot.message_handler(commands=["juridico"])
+def command_juridico(message):
+    texto = "texto juridico"
+
+    estagioBot.reply_to(message, texto)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "juridico")
+def callback_juridico(callback):
+    command_juridico(callback.message)
+
+@estagioBot.message_handler(commands=["bolsaEstagio"])
+def command_bolsaEstagio(message):
+    texto = "A bolsa estágio é um valor em dinheiro que o estagiário recebe pelas 300 horas trabalhadas. Esse valor é dividido e enviado para o estagiário de acordo com as horas que ele estagiou no mês. \n\nPara saber quanto irá ganhar, digite o tempo(em horas) que você estagiou durante o mês:"
+
+    estagioBot.reply_to(message, texto)
+    estagioBot.register_next_step_handler(message, aguardar_valorBolsa)
+
+def aguardar_valorBolsa(message):
+
+    if (message.text.isnumeric()):
+        valor_bolsa = float(message.text) * 4.54
+
+        valor_bolsa = str(valor_bolsa).replace(".", ",")
+
+        mensagem = f"Você receberá: R${valor_bolsa}"
+
+    else:
+        mensagem = "Número inválido, não é possível calcular o valor a receber!"
+
+    estagioBot.reply_to(message, mensagem)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+    
+@estagioBot.callback_query_handler(func= lambda call: call.data == "bolsaEstagio")
+def callback_bolsaEstagio(callback):
+    command_bolsaEstagio(callback.message)
 
 
 estagioBot.polling()

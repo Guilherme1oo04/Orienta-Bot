@@ -21,7 +21,7 @@ def tecladoInicio():
 
     keyboardInicio = InlineKeyboardMarkup()
     button_sobre = InlineKeyboardButton('Sobre', callback_data="sobre")
-    button_duvidas = InlineKeyboardButton('Duvidas', callback_data="duvidas")
+    button_duvidas = InlineKeyboardButton('Dúvidas', callback_data="duvidas")
     keyboardInicio.add(button_sobre, button_duvidas)
 
     return keyboardInicio
@@ -32,9 +32,9 @@ def tecladoDuvidas():
     empresa = InlineKeyboardButton("Empresa", callback_data="empresa")
     checkEstagiario = InlineKeyboardButton("Checklist Estagiário", callback_data="checklistEstagio")
     sice = InlineKeyboardButton("Sice", callback_data="sice")
-    dicasRelatorio = InlineKeyboardButton("Dicas Relatorio", callback_data="dicasRelatorio")
+    dicasRelatorio = InlineKeyboardButton("Dicas Relatório", callback_data="dicasRelatorio")
     mediacao = InlineKeyboardButton("Mediação", callback_data= "mediacao")
-    bolsaEstagio = InlineKeyboardButton("Bolsa Estagio", callback_data="bolsaEstagio")
+    bolsaEstagio = InlineKeyboardButton("Bolsa Estágio", callback_data="bolsaEstagio")
     keyboardDuvidas.row(empresa, checkEstagiario).row(sice, dicasRelatorio).row(mediacao, bolsaEstagio)
 
     return keyboardDuvidas
@@ -53,7 +53,7 @@ def tecladoChecklist():
 
     keyboardCheckList = InlineKeyboardMarkup()
     frequencia = InlineKeyboardButton("Frequência", callback_data="frequencia")
-    projetoSocial = InlineKeyboardButton("Projeto Social", callback_data="SocialProject")
+    projetoSocial = InlineKeyboardButton("Projeto Social", callback_data="projetoSocial")
     cronograma = InlineKeyboardButton("Cronograma", callback_data="cronograma")
     avaliacao = InlineKeyboardButton("Avaliação", callback_data="avaliacao")
     keyboardCheckList.row(frequencia, projetoSocial).row( cronograma, avaliacao)
@@ -76,3 +76,13 @@ def tecladoDicasRelatorio():
     keyboardDicas.row(estrutura).row(normasAbnt)
 
     return keyboardDicas
+
+def tecladoEmpresa():
+
+    keyboardEmpresa = InlineKeyboardMarkup()
+    cargaHoraria = InlineKeyboardButton("Carga horária", callback_data="cargaHoraria")
+    processoSeletivo = InlineKeyboardButton("Processo seletivo", callback_data="processoSeletivo")
+    juridico = InlineKeyboardButton("Jurídico", callback_data="juridico")
+    keyboardEmpresa.row(cargaHoraria).row(processoSeletivo).row(juridico)
+
+    return keyboardEmpresa
