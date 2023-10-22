@@ -10,9 +10,6 @@ chave_api = os.environ["API_TOKEN"]
 
 estagioBot = telebot.TeleBot(token=chave_api)
 
-#Teclado Start
-keyboardStart = keyboards.tecladoStart()
-
 #Teclado Sim / Não
 keyboardSN = keyboards.tecladoSimNao()
 
@@ -56,22 +53,12 @@ def aguardar_feedback(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "feedback")
 def callback_feedback(callback):
     command_feedback(callback.message)
-            
-
-#Resposta padrão do bot caso não seja um comando
-@estagioBot.message_handler(func=lambda message: not message.text.startswith('/'))
-def handle_text(message):
-    estagioBot.reply_to(message, 'Para utilizar o bot, comece com o botão start abaixo', reply_markup=keyboardStart)
-
-@estagioBot.callback_query_handler(func= lambda call: call.data == "start")
-def callback_start(callback):
-    handle_start(callback.message)
 
 
 #Teclado inicial
 keyboardInicio = keyboards.tecladoInicio()
 
-@estagioBot.message_handler(commands=['start'])
+@estagioBot.message_handler(func=lambda message: not message.text.startswith('/'))
 def handle_start(message):
     texto = "Olá, seja bem vindo! \nEsse é o Orienta Bot. para prosseguir, escolha uma das opções"
     estagioBot.reply_to(message, texto, reply_markup=keyboardInicio)
@@ -98,6 +85,19 @@ def command_duvidas(message):
 @estagioBot.callback_query_handler(func= lambda call: call.data == "duvidas")
 def callback_duvidas(callback):
     command_duvidas(callback.message)
+
+@estagioBot.message_handler(commands=["digiteDuvida"])
+def command_digiteDuvida(message):
+    texto = "Digite sua dúvida, o bot tentará encontrar a(s) resposta(s) adequada(s) para o que deseja saber\n\nEvite digitar utilizando acentos e caracteres especiais, pois o bot não consegue identificá-los"
+    estagioBot.reply_to(message, texto)
+    estagioBot.register_next_step_handler(message, espera_duvida)
+
+def espera_duvida(message):
+    estagioBot.reply_to(message, "opa")
+
+@estagioBot.callback_query_handler(func= lambda call: call.data == "digiteDuvida")
+def callback_digiteDuvida(callback):
+    command_digiteDuvida(callback.message)
 
 
 @estagioBot.message_handler(commands=["mediacao"])
