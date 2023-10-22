@@ -1,13 +1,5 @@
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-def tecladoStart():
-
-    keyboardStart = InlineKeyboardMarkup()
-    button_start = InlineKeyboardButton("Start", callback_data="start")
-    keyboardStart.add(button_start)
-
-    return keyboardStart
-
 def tecladoSimNao():
     
     keyboardSN = InlineKeyboardMarkup()
@@ -22,7 +14,8 @@ def tecladoInicio():
     keyboardInicio = InlineKeyboardMarkup()
     button_sobre = InlineKeyboardButton('Sobre', callback_data="sobre")
     button_duvidas = InlineKeyboardButton('Dúvidas', callback_data="duvidas")
-    keyboardInicio.add(button_sobre, button_duvidas)
+    button_digiteDuvida = InlineKeyboardButton('Pesquise sua dúvida', callback_data="digiteDuvida")
+    keyboardInicio.row(button_sobre).row(button_duvidas).row(button_digiteDuvida)
 
     return keyboardInicio
 
