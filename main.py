@@ -3,6 +3,7 @@ import telebot
 import json
 from keyboards import keyboards
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -88,12 +89,39 @@ def callback_duvidas(callback):
 
 @estagioBot.message_handler(commands=["digiteDuvida"])
 def command_digiteDuvida(message):
-    texto = "Digite sua dúvida, o bot tentará encontrar a(s) resposta(s) adequada(s) para o que deseja saber\n\nEvite digitar utilizando acentos e caracteres especiais, pois o bot não consegue identificá-los"
+    texto = "Digite palavras-chave sobre as suas dúvidas, o bot tentará encontrar a(s) resposta(s) adequada(s) para o que deseja saber\n\nEvite digitar utilizando acentos e caracteres especiais, pois o bot não consegue identificá-los"
     estagioBot.reply_to(message, texto)
     estagioBot.register_next_step_handler(message, espera_duvida)
 
 def espera_duvida(message):
-    estagioBot.reply_to(message, "opa")
+    if (message.text != ""):
+        texto_inicio = "Estes são os tópicos respondidos que podem te ajudar com a sua dúvida:\n"
+        texto = ""
+
+        palavras_chave = message.text.split()
+        dataframe = pd.read_csv("palavras_chave.csv")
+
+        for palavra in palavras_chave:
+            is_present = dataframe["palavra_chave"].isin([palavra])
+
+            indices = dataframe.index[is_present].tolist()
+
+            if (len(indices) > 0):
+                if (texto_inicio not in texto):
+                    texto += texto_inicio
+
+                for x in indices:
+                    linha = dataframe.iloc[int(x)]
+
+                    if (linha.iloc[1].replace(" ", "") not in texto):
+                        texto += f"\n{linha.iloc[1]}".replace(" ", "")
+
+        if (texto != ""):
+            estagioBot.reply_to(message, texto)
+        else:
+            estagioBot.reply_to(message, "Desculpe, não foi encontrado algo relacionado ao que você digitou!")
+
+
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "digiteDuvida")
 def callback_digiteDuvida(callback):
