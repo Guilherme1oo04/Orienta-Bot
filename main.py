@@ -98,7 +98,7 @@ def espera_duvida(message):
         texto_inicio = "Estes são os tópicos respondidos que podem te ajudar com a sua dúvida:\n"
         texto = ""
 
-        palavras_chave = message.text.split()
+        palavras_chave = message.text.lower().split()
         dataframe = pd.read_csv("palavras_chave.csv")
 
         for palavra in palavras_chave:
@@ -147,7 +147,7 @@ def command_checklistEstagio(message):
     texto = "texto do checklist do estagio"
     
     estagioBot.reply_to(message, texto)
-    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
+    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardCheckList)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "checklistEstagio")
 def callback_checklistEstagio(callback):
