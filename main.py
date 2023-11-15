@@ -130,7 +130,7 @@ def callback_digiteDuvida(callback):
 
 @estagioBot.message_handler(commands=["mediacao"])
 def command_mediacao(message):
-    texto = "INSERT MEDIAÇÃO TEXT"
+    texto = "É um encontro mensal com o orientador para avaliar o seu desempenho durante o mês. Acontece, geralmente, no final do mês e você deve levar a frequência assinada pelo seu supervisor. Também é um  momento para discutir questões acerca do projeto social da classe."
 
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
@@ -156,9 +156,12 @@ def callback_checklistEstagio(callback):
 
 @estagioBot.message_handler(commands=["frequencia"])
 def command_frequencia(message):
-    texto = "texto da frequencia"
-    
+    texto = "A frequência deve ser assinada pelo supervisor, orientador de estágio, estudante e gestor da escola. O estagiário não tem direito a faltas abonadas (o abono de faltas se trata de um direito que o trabalhador tem de faltar ao trabalho, sem que haja descontos no seu salário). Atestados justificam as ausências, mas as faltas deverão ser repostas."
     estagioBot.reply_to(message, texto)
+
+    texto2 = "ATENÇÃO: \n - A frequência deve ser assinada de caneta azul, não conter rasuras, manchas, nem estar amassado. \n - O estagiário deverá solicitar a assinatura diária da frequência pelo supervisor. \n - O aluno que entregar a frequência fora do prazo, receberá o valor da bolsa somente no mês seguinte."
+    estagioBot.reply_to(message, texto2)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "frequencia")
@@ -168,7 +171,7 @@ def callback_frequencia(callback):
 
 @estagioBot.message_handler(commands=["projetoSocial"])
 def command_projetoSocial(message):
-    texto = "texto do projeto social"
+    texto = "Projetos sociais são trabalhos desenvolvidos de modo a impactar positivamente no desenvolvimento social, econômico ou cultural de uma comunidade, sociedade ou grupo. É uma forma de avaliação necessária para a conclusão do curso. Cada curso deverá desenvolver um projeto em conjunto com a classe."
     
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
@@ -220,8 +223,27 @@ def callback_sice(callback):
 @estagioBot.message_handler(commands=["autoAvaliacao"])
 def command_autoAvaliacao(message):
 
-    texto = "explicação da auto avaliação"
-    estagioBot.reply_to(message, texto)
+    texto = 'A autoavaliação é um espaço que você pode acessar através da plataforma SICE. Neste espaço, você responderá a perguntas como "O que aprendi?", "O que precisa ser aprimorado?" e "Qual foi a contribuição do estágio para o meu desenvolvimento pessoal?". É essencial completar essa avaliação todos os meses imediatamente após a *_mediação_*(/mediacao). Uma sugestão: procure responder usando um computador, já que o sistema pode não salvar as informações se você preencher a partir de um celular.'
+    estagioBot.reply_to(message, texto, parse_mode="Markdown")
+
+    texto2 = 'A seguir um tutorial para acessar a autoavaliação:\n\n1. Acesse o link: https://sice.seduc.ce.gov.br/sice/login.jsf\n2. Siga os passos indicados:'
+    estagioBot.reply_to(message, texto2)
+
+    path = os.path.dirname(os.path.realpath(__file__))
+    assets_path = os.path.join(path, 'assets')
+
+    img1 = open(str(os.path.join(assets_path, "img-seçao-estagiario.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img1)
+
+    img2 = open(str(os.path.join(assets_path, "img-seçao-autoAvaliaçao.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img2)
+
+    texto3 = "3. Pronto! Agora basta selecionar o ícone indicado e responder as questões. Lembre-se de salvar suas respostas."
+    estagioBot.reply_to(message, texto3)
+
+    img3 = open(str(os.path.join(assets_path, "img-autoAvaliaçao-novo.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img3)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "autoAvaliacao")
@@ -232,8 +254,27 @@ def callback_autoAvaliacao(callback):
 @estagioBot.message_handler(commands=["avaliacaoOrientador"])
 def command_avaliacaoOrientador(message):
 
-    texto = "explicação da avaliação do orientador"
-    estagioBot.reply_to(message, texto)
+    texto = 'A avaliação do orientador é um espaço que você pode acessar através da plataforma SICE. Neste espaço, você responderá a perguntas relacionadas ao seu orientador como "Realizou orientações antes do início do estágio?", "Esclarece as dúvidas?" e "Faz acompanhamento individual?". É essencial completar essa avaliação todos os meses imediatamente após a *_mediação_*(/mediacao). Uma sugestão: procure responder usando um computador, já que o sistema pode não salvar as informações se você preencher a partir de um celular.'
+    estagioBot.reply_to(message, texto, parse_mode="Markdown")
+
+    texto2 = 'A seguir um tutorial para acessar a avaliação do orientador:\n\n1. Acesse o link: https://sice.seduc.ce.gov.br/sice/login.jsf\n2. Siga os passos indicados:'
+    estagioBot.reply_to(message, texto2)
+
+    path = os.path.dirname(os.path.realpath(__file__))
+    assets_path = os.path.join(path, 'assets')
+
+    img1 = open(str(os.path.join(assets_path, "img-seçao-estagiario.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img1)
+
+    img2 = open(str(os.path.join(assets_path, "img-seçao-avaliaçaoOrientador.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img2)
+
+    texto3 = "3. Pronto! Agora basta selecionar o ícone indicado e responder as questões. Lembre-se de salvar suas respostas."
+    estagioBot.reply_to(message, texto3)
+
+    img3 = open(str(os.path.join(assets_path, "img-avaliaçaoOrientador-novo.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img3)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "avaliacaoOrientador")
@@ -244,8 +285,27 @@ def callback_avaliacaoOrientador(callback):
 @estagioBot.message_handler(commands=["envioRelatorio"])
 def command_envioRelatorio(message):
 
-    texto = "explicação do envio do relatório"
+    texto = "O Relatório Final do Estágio é um espaço que você pode acessar através da plataforma SICE. Neste espaço, você enviará o arquivo correspondente ao seu relatório de conclusão do curso. É essencial você se certificar que a estrutura e o modelo do seu texto está correto, visite /dicasRelatorio."
     estagioBot.reply_to(message, texto)
+
+    texto2 = 'A seguir um tutorial para acessar o envio do relatório final de estágio:\n\n1. Acesse o link: https://sice.seduc.ce.gov.br/sice/login.jsf\n2. Siga os passos indicados:'
+    estagioBot.reply_to(message, texto2)
+
+    path = os.path.dirname(os.path.realpath(__file__))
+    assets_path = os.path.join(path, 'assets')
+
+    img1 = open(str(os.path.join(assets_path, "img-seçao-estagiario.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img1)
+
+    img2 = open(str(os.path.join(assets_path, "img-seçao-relatorioFinal.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img2)
+
+    texto3 = "3. Pronto! Agora basta selecionar o ícone indicado e anexar seu documento."
+    estagioBot.reply_to(message, texto3)
+
+    img3 = open(str(os.path.join(assets_path, "img-relatorioFinal-novo.png")), "rb")
+    estagioBot.send_photo(message.chat.id, img3)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "envioRelatorio")
@@ -267,32 +327,27 @@ def callback_dicasRelatorio(callback):
 
 @estagioBot.message_handler(commands=["relatorioAbnt"])
 def command_relatorioAbnt(message):
-    texto = """
-Margens e espaçamento:
-As margens devem ser de 2,5 cm em todos os lados da página.
-O texto deve ser digitado em espaço 1,5 entre as linhas.
-
-Fonte e tamanho:
-Utilize fonte Times New Roman ou Arial, tamanho 12 para o texto do relatório.
-Para títulos e subtítulos, utilize fonte tamanho 14 ou 16, em negrito.
-
-Numeração de páginas:
-A numeração deve ser colocada no canto superior direito da página, a partir da introdução.
-A capa e a folha de rosto não devem ser numeradas.
-
-Citações e referências:
-Utilize o sistema autor-data para citações no texto, seguindo as regras da ABNT.
-Inclua uma lista de referências bibliográficas ao final do relatório, em ordem alfabética.
-
-Notas de rodapé:
-Utilize notas de rodapé para fornecer informações adicionais ou explicar termos técnicos.
-As notas de rodapé devem ser numeradas sequencialmente e colocadas na parte inferior da página.
-
-Ilustrações e tabelas:
-As ilustrações (como gráficos, imagens e diagramas) devem ser numeradas e acompanhadas de uma legenda explicativa.
-As tabelas também devem ser numeradas e ter uma legenda descritiva.
-"""
+    texto = "Aqui estão algumas dicas úteis para ajudá-lo a escrever um relatório de acordo com as normas da ABNT:"
     estagioBot.reply_to(message, texto)
+
+    texto2 = "1. Entenda o propósito do relatório: Antes de começar, compreenda o motivo pelo qual está escrevendo o relatório e qual é o seu público-alvo. Isso o ajudará a estruturar o conteúdo de forma adequada."
+    estagioBot.reply_to(message, texto2)
+
+    texto3 = "2. Organize seu tempo: Planeje com antecedência para ter tempo suficiente para pesquisa, redação e revisão do relatório. Evite deixar tudo para a última hora."
+    estagioBot.reply_to(message, texto3)
+
+    texto4 = "3. Siga a estrutura da ABNT: Use a estrutura padrão da ABNT, conforme mencionada na resposta anterior. Certifique-se de que todos os elementos, como capa, sumário, referências, etc., estejam presentes."
+    estagioBot.reply_to(message, texto4)
+
+    texto5 = "4. Seja claro e conciso: Evite linguagem excessivamente técnica. Use uma linguagem clara e evite jargões que possam não ser compreendidos pelo seu público."
+    estagioBot.reply_to(message, texto5)
+
+    texto6 = "5. Siga rigorosamente as *regras de formatação da ABNT* em relação a margens(/relatorioEstrutura), espaçamento, fonte, numeração de páginas, citações, e outros detalhes de estilo. Utilize um editor de texto que ofereça suporte a essas formatações."
+    estagioBot.reply_to(message, texto6, parse_mode="Markdown")
+
+    texto7 = "Lembre-se de que um relatório acadêmico deve ser escrito de forma profissional e imparcial, evitando opiniões pessoais a menos que seja solicitado."
+    estagioBot.reply_to(message, texto7)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioAbnt")
@@ -302,27 +357,33 @@ def callback_relatorioAbnt(callback):
 
 @estagioBot.message_handler(commands=["relatorioEstrutura"])
 def command_relatorioEstrutura(message):
-    texto = """
-Capa e Folha de Rosto:
-A capa deve conter o nome da instituição, título do relatório, nome do autor, local e data.
-A folha de rosto deve conter as mesmas informações da capa, além do nome do orientador e do curso.
-
-Sumário:
-O sumário é essencial para organizar o conteúdo do relatório. Ele deve listar os títulos e subtítulos das seções, com a indicação das páginas correspondentes.
-
-Introdução:
-Na introdução, apresente o contexto do estágio, o objetivo do relatório e a importância do trabalho realizado.
-
-Desenvolvimento:
-Divida o relatório em seções e subseções, de acordo com a estruturação do seu estágio.
-Explique as atividades desenvolvidas, os métodos utilizados e os resultados obtidos.
-Utilize referências bibliográficas para fundamentar suas informações e citações.
-
-Conclusão:
-Na conclusão, faça um resumo dos principais resultados alcançados no estágio.
-Avalie o cumprimento dos objetivos propostos e discuta os aprendizados adquiridos durante o período.
-"""
+    texto = "Aqui estão as principais diretrizes relacionadas a margens, espaçamento, fonte, numeração de páginas, citações e outros detalhes de estilo:"
     estagioBot.reply_to(message, texto)
+
+    texto2 = "1. Margens:\n - As margens devem seguir o seguinte padrão:\n  - Superior: 3 cm\n  - Inferior: 2 cm.\n  - Esquerda: 3 cm.\n  - Direita: 2 cm.\n"
+    estagioBot.reply_to(message, texto2)
+
+    texto3 = "2. Espaçamento:\n - O texto deve ser digitado com espaçamento de 1,5 entre linhas."
+    estagioBot.reply_to(message, texto3)
+
+    texto4 = "3. Fonte:\n - A fonte recomendada é Arial ou Times New Roman, tamanho 12."
+    estagioBot.reply_to(message, texto4)
+
+    texto5 = "4. Numeração de Páginas:\n - A numeração de páginas deve ser posicionada no canto superior direito da página, a 2 cm da borda superior.\n - A contagem começa a partir da folha de rosto, mas as páginas preliminares (como capa, sumário e lista de figuras) não devem ser numeradas. A contagem de página deve começar na primeira página do conteúdo (introdução, por exemplo), em algarismos arábicos."
+    estagioBot.reply_to(message, texto5)
+
+    texto6 = "5. Citações:\n - As citações diretas devem ser colocadas entre aspas e indicar a autoria, o ano e a página (se aplicável).\n -  Citações longas (com mais de três linhas) devem ser destacadas com recuo à esquerda de 4 cm, sem aspas, com espaçamento simples e fonte tamanho 10.\n - As referências bibliográficas completas devem ser listadas nas referências, seguindo as normas da ABNT."
+    estagioBot.reply_to(message, texto6)
+
+    texto7 = "6. Referências Bibliográficas:\n - As referências devem seguir um formato específico, dependendo do tipo de fonte (livros, artigos, sites, etc.). Certifique-se de consultar a norma da ABNT correspondente para cada tipo de fonte. Normalmente, as referências são organizadas em ordem alfabética."
+    estagioBot.reply_to(message, texto7)
+
+    texto8 = "3. Títulos das Seções:\n - Os títulos das seções (introdução, metodologia, resultados, conclusão, etc.) devem ser escritos em maiúsculas e minúsculas, em negrito, com alinhamento à esquerda e sem numeração."
+    estagioBot.reply_to(message, texto8)
+
+    texto9 = "Lembre-se de que essas são diretrizes gerais da ABNT. As instituições acadêmicas podem ter suas próprias variações e regras específicas. Portanto, é importante consultar as normas da ABNT vigentes e as diretrizes específicas da sua instituição para garantir a conformidade total."
+    estagioBot.reply_to(message, texto9)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "relatorioEstrutura")
@@ -345,7 +406,7 @@ def callback_empresa(callback):
 
 @estagioBot.message_handler(commands=["cargaHoraria"])
 def command_cargaHoraria(message):
-    texto = "texto carga horaria"
+    texto = "O período total de estágio pode durar até 6 meses, porém há algumas divisões entre as atividades, não restritas somente ao trabalho em campo. \n\nOs cursos de Informática e Fruticultura possuem 300h de estágio em campo. \nOs cursos de Administração e Finanças possuem 250h de estágio em campo. \n\nAlém disso, atividades como: Semana preparatória, relatórios, projeto social e mediação, possuem uma carga horária total de 100h."
 
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
@@ -367,9 +428,18 @@ def callback_processoSeletivo(callback):
 
 @estagioBot.message_handler(commands=["juridico"])
 def command_juridico(message):
-    texto = "texto juridico"
+    texto1 = "SEGUROS CONTRA ACIDENTES PESSOAIS: \nO inciso IV do Artigo 9° da Lei n° 11.788/2008 e o parágrafo 4° do Artigo 5° do Decreto N°. 30.933/12, todos os estudantes ao estagiários estarão cobertos por seguro contra acidentes pessoais."
+    estagioBot.reply_to(message, texto1)
 
-    estagioBot.reply_to(message, texto)
+    texto2 = "O seguro contra acidentes pessoais será concedido a todos os estudantes que tiverem seus estágios formalizados através de TCE entre a escola, o estudante e a concedente de estágio e mediante a inserção do estudante na apólice no SICE."
+    estagioBot.reply_to(message, texto2)
+
+    texto3 = "FREQUÊNCIA DOS ESTUDANTES: \nO estagiário não tem direito a faltas abonadas (o abono de faltas se trata de um direito que o trabalhador tem de faltar ao trabalho, sem que haja descontos no seu salário). Atestados justificam as ausências, mas as faltas deverão ser repostas."
+    estagioBot.reply_to(message, texto3)
+
+    texto4 = "PRAZO DE DURAÇÃO DO ESTÁGIO: \nAté 6 (seis) meses consecutivos para os cursos com carga horária total de 400 (quatrocentas) horas. Administração, Finanças, Fruticultura, Informática."
+    estagioBot.reply_to(message, texto4)
+
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "juridico")
@@ -378,7 +448,7 @@ def callback_juridico(callback):
 
 @estagioBot.message_handler(commands=["bolsaEstagio"])
 def command_bolsaEstagio(message):
-    texto = "A bolsa estágio é um valor em dinheiro que o estagiário recebe pelas 300 horas trabalhadas. Esse valor é dividido e enviado para o estagiário de acordo com as horas que ele estagiou no mês. \n\nPara saber quanto irá ganhar, digite o tempo(em horas) que você estagiou durante o mês:"
+    texto = "A bolsa estágio é um valor recebido mensalmente. Seu valor é calculado com base nas horas trabalhadas por mês e multiplicado por um valor que pode variar anualmente, em 2023 o valor da hora é $ 4,52. \nPara calcular o valor que você receberá informe quantas horas foram trabalhadas:"
 
     estagioBot.reply_to(message, texto)
     estagioBot.register_next_step_handler(message, aguardar_valorBolsa)
@@ -390,7 +460,7 @@ def aguardar_valorBolsa(message):
 
         valor_bolsa = str(valor_bolsa).replace(".", ",")
 
-        mensagem = f"Você receberá: R${valor_bolsa}"
+        mensagem = f"Excelente, você receberá: R${valor_bolsa}"
 
     else:
         mensagem = "Número inválido, não é possível calcular o valor a receber!"
