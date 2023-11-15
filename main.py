@@ -130,7 +130,7 @@ def callback_digiteDuvida(callback):
 
 @estagioBot.message_handler(commands=["mediacao"])
 def command_mediacao(message):
-    texto = "É um encontro mensal com o orientador para avaliar o seu desempenho durante o mês. Acontece, geralmente, no final do mês e você deve levar a frequência assinada pelo seu supervisor. Também é um  momento para discutir questões acerca do projeto social da classe."
+    texto = "A mediação é um encontro mensal com o orientador para avaliar o seu desempenho durante o mês. Acontece, geralmente, no final do mês e você deve levar a frequência assinada pelo seu supervisor. Também é um  momento para discutir questões acerca do projeto social da classe."
 
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
@@ -428,6 +428,9 @@ def callback_processoSeletivo(callback):
 
 @estagioBot.message_handler(commands=["juridico"])
 def command_juridico(message):
+    texto = "Informações Jurídicas:"
+    estagioBot.reply_to(message, texto)
+
     texto1 = "SEGUROS CONTRA ACIDENTES PESSOAIS: \nO inciso IV do Artigo 9° da Lei n° 11.788/2008 e o parágrafo 4° do Artigo 5° do Decreto N°. 30.933/12, todos os estudantes ao estagiários estarão cobertos por seguro contra acidentes pessoais."
     estagioBot.reply_to(message, texto1)
 
