@@ -144,10 +144,8 @@ keyboardCheckList = keyboards.tecladoChecklist()
 
 @estagioBot.message_handler(commands=["checklistEstagio"])
 def command_checklistEstagio(message):
-    texto = "texto do checklist do estagio"
-    
-    estagioBot.reply_to(message, texto)
-    estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardCheckList)
+
+    estagioBot.reply_to(message, "Esses são tópicos muito importantes para o estagiário e que podem ajudá-lo a tirar alguma dúvida:", reply_markup=keyboardCheckList)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "checklistEstagio")
 def callback_checklistEstagio(callback):
@@ -195,7 +193,7 @@ def callback_cronograma(callback):
 
 @estagioBot.message_handler(commands=["avaliacao"])
 def command_avaliacao(message):
-    texto = "Texto de avaliacao"
+    texto = "Durante o estágio, existem avaliações que os estgiários passam para receber uma nota, que é necessária para passar na matéria da grade curricular relacionada ao estágio\nEntre os critérios avaliados estão:\n - Comportamento do estagiário na concedente e nas mediações\n - Entrega correta das frequências\n - Projeto social\n - Relatório final de estágio\n"
     
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
@@ -417,7 +415,7 @@ def callback_cargaHoraria(callback):
 
 @estagioBot.message_handler(commands=["processoSeletivo"])
 def command_processoSeletivo(message):
-    texto = "texto processo seletivo"
+    texto = "A forma de processo seletivo pode variar a depender da concedente (empresa). Geralmente, essa seleção é feita com base no histórico do aluno ou entrevista. No ano de 2023, o processo seletivo de algumas empresas foram realizados da seguinte forma:\n\nBrisanet Telecomunicações: Entrevista realizada a partir de um vídeo curto, onde o estudante evidenciava suas principais habilidades.\nAgility Labs: As vagas foram destinadas ao curso técnico em informática, sua forma de avaliação foi o GitHub, Linkedin e Behance.\nAgritech: O aluno é avaliado pelo seu histórico.\nNossa fruta: O aluno é avaliado por entrevista e o seu histórico escolar.\nNosso atacarejo: É baseado em análise de currículo escolar e entrevistas.\nSuper Queiroz: Os alunos são entrevistados por pessoas da empresa e o seu currículo escolar."
 
     estagioBot.reply_to(message, texto)
     estagioBot.reply_to(message, "Deseja ver outras dúvidas?", reply_markup=keyboardSN)
