@@ -1,12 +1,29 @@
 # OrientaBot
 
-### Run in Docker
-<b>Atenção: mova o .env.example para .env e insira a API, se não vai ocorrer erros no docker!</b>
+## Docker
 
-Para montar a imagem docker utilize o comando: 
+**Atenção:** mova o arquivo `.env.example` para `.env` e insira a chave da API; caso contrário, erros podem ocorrer no Docker!
 
-```docker build -t orientabot . ```
+### Construir a imagem Docker
 
-Para iniciar o docker utilize:
+Utilize o seguinte comando para construir a imagem Docker:
 
-```docker run orientabot```
+```bash
+docker build -t orientabot .
+```
+
+### Iniciar o Docker
+
+Para iniciar o contêiner Docker, utilize o comando:
+
+```bash
+docker run orientabot
+```
+
+### Executar em segundo plano
+
+Se preferir executar o contêiner em segundo plano, utilize o comando:
+
+```bash
+docker run -d orientabot
+```
