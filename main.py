@@ -67,7 +67,7 @@ def handle_start(message):
 
 @estagioBot.message_handler(commands=['sobre'])
 def command_sobre(message):
-    estagioBot.reply_to(message, "Explicação do projeto")
+    estagioBot.reply_to(message, "O Orienta Bot é um chatbot na plataforma de mensagens Telegram que tem como objetivo responder às principais dúvidas relacionadas ao estágio, que é realizado no segundo semestre pelos terceiros anos para finalizar a grade do curso técnico. Esse chatbot tem as principais dúvidas que os estagiários têm ou podem vir a ter no futuro respondidas, disponível para consulta de uma forma totalmente dinâmica, bastando clicar em alguns botões na página para encontrar o que deseja.")
     estagioBot.reply_to(message, "Deseja ver alguma das dúvidas respondidas?", reply_markup=keyboardSN)
 
 @estagioBot.callback_query_handler(func= lambda call: call.data == "sobre")
